@@ -13,18 +13,18 @@ export class AdminController
         return this.adminService.getIndex();
     }
 
+    @Get("/finduser/")
+    getUserByID(@Param('id', ParseIntPipe) id:number,): any {
+      return this.adminService.getUserByID(id);
+    }
+
     @Post("/setprice/")
     setPrice(
         @Body("price") price:number,
     ):any {
         return this.adminService.setPrice(price);
     }
-
-    @Get("/finduser/")
-    getUserByID(@Param("id", ParseIntPipe) id:number,): any {
-      return this.adminService.getUserByID(id);
-    }
-
+ 
     @Delete("/deleteuser/")
     deleteUser(@Query() qry:any): any {
         return this.adminService.deleteUser(qry);

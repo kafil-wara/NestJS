@@ -17,7 +17,7 @@ export class AdminService {
     }
 
     addNewUser(mydto):any {
-        return "User with id " + mydto.id + " ,name " + mydto.name + "& email " + mydto.email + " added"
+        return "User with id " + mydto.id + ", name " + mydto.name + " & email " + mydto.email + " added"
     }
 
     deleteUser(qry):any {
