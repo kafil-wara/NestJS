@@ -2,17 +2,18 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from 'typeorm'
 import { User } from "./adminentity.entity"
-import { Transform } from "class-transformer";
+import { Transform } from "class-transformer"
+
 
 
 @Injectable()
 export class AdminService {
 
-    /*
+    
     constructor(
         @InjectRepository(User)
         private usersRepository: Repository<User>,
-    ){} */
+    ){} 
 
     getIndex():string { 
         return "Admin Index"; 
@@ -27,7 +28,12 @@ export class AdminService {
     }
 
     addNewUser(mydto):any {
-        return "User with id " + mydto.id + ", name " + mydto.name + " & email " + mydto.email + " added"
+        const adminacc = new User()
+        adminacc.name = mydto.name;
+        adminacc.email = mydto.email;
+        adminacc.password = mydto.password;
+        return this.usersRepository.save(adminacc);
+        //return "User with id " + mydto.id + ", name " + mydto.name + " & email " + mydto.email + " added"
     }
 
     deleteUser(qry):any {

@@ -5,7 +5,16 @@ import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [AdminModule],
+  imports: [AdminModule, TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: 'aaa',
+    database: 'bdflix',
+    entities: [],
+    synchronize: true,
+  })],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -13,14 +22,5 @@ export class AppModule {}
 
 
 /*
-, TypeOrmModule.forRoot({
-    type: 'postgres',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'root',
-    database: 'bdflix',
-    entities: [],
-    synchronize: true,
-  })
+
 */
