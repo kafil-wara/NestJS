@@ -6,14 +6,14 @@ import { AdminService } from "./adminservice.service";
 @Controller("/admin")
 export class AdminController
 { 
-  constructor(private adminService: AdminService){}
+    constructor(private adminService: AdminService){}
 
-    @Get("/index")
+    @Get("/index/")
     getAdmin(): any { 
         return this.adminService.getIndex();
     }
 
-    @Get("/finduser/")
+    @Get("/finduser/:id")
     getUserByID(@Param('id', ParseIntPipe) id:number,): any {
       return this.adminService.getUserByID(id);
     }

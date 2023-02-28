@@ -1,4 +1,5 @@
 import { IsAlphanumeric, IsEmail, IsNotEmpty, Length, MaxLength, MinLength } from "class-validator"
+import { Transform } from 'class-transformer'
 
 export class AdminForm {
     @MinLength(3, {
@@ -18,6 +19,7 @@ export class AdminForm {
     @IsNotEmpty({
         message: "name cannot be empty"
     })
+    @Transform(({ value }) => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase())
     name: string;
     
 }
