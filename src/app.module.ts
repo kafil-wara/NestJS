@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AdminModule } from './admin/admin.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './admin/adminentity.entity';
 
 @Module({
   imports: [AdminModule, TypeOrmModule.forRoot({
@@ -12,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     username: 'postgres',
     password: 'aaa',
     database: 'bdflix',
-    entities: [],
+    autoLoadEntities: true,
     synchronize: true,
   })],
   controllers: [AppController],

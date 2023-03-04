@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from 'typeorm'
 import { User } from "./adminentity.entity"
 import { Transform } from "class-transformer"
+import { AdminForm } from "./adminform.dto";
 
 
 
@@ -27,7 +28,7 @@ export class AdminService {
         return "the id "+ id + " is blocked";
     }
 
-    addNewUser(mydto):any {
+    addNewUser(mydto: AdminForm):any {
         const adminacc = new User()
         adminacc.name = mydto.name;
         adminacc.email = mydto.email;
