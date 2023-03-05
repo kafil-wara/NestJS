@@ -20,25 +20,35 @@ export class AdminService {
         return "Admin Index"; 
 
     }
+
+    getAllUsers():any {
+        return this.usersRepository.find()
+    }
+
     getUserByID(id):any {   
-        return "the id is "+id;
+        return this.usersRepository.findOneBy({ id })
+        //return "the id is "+id;
     }
 
     blockUser(id):any {
+        return this.usersRepository.update(id, {isblocked: true})
         return "the id "+ id + " is blocked";
     }
 
     addNewUser(mydto: AdminForm):any {
-        const adminacc = new User()
-        adminacc.name = mydto.name;
-        adminacc.email = mydto.email;
-        adminacc.password = mydto.password;
-        return this.usersRepository.save(adminacc);
+        const useracc = new User()
+        useracc.name = mydto.name;
+        useracc.email = mydto.email;
+        useracc.password = mydto.password;
+        useracc.isblocked = false;
+        return this.usersRepository.save(useracc);
         //return "User with id " + mydto.id + ", name " + mydto.name + " & email " + mydto.email + " added"
     }
 
     deleteUser(qry):any {
-        return "User with id " +qry.id + " deleted"
+        //const toDelete = this.usersRepository.findOneBy(qry.id)
+        return this.usersRepository.delete(qry.id);
+        //return "User with id " +qry.id + " deleted"
     }
 
     setPrice(price):any {

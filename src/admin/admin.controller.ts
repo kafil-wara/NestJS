@@ -13,6 +13,11 @@ export class AdminController
         return this.adminService.getIndex();
     }
 
+    @Get("/alluser")
+    getAllUser(): any {
+        return this.adminService.getAllUsers();
+    }
+
     @Get("/finduser/:id")
     getUserByID(@Param('id', ParseIntPipe) id:number,): any {
       return this.adminService.getUserByID(id);

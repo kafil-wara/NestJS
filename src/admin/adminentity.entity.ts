@@ -14,5 +14,8 @@ export class User{
   @Column()
   password: string;
 
+  @Column()
+  isblocked: boolean;
+
 
 }

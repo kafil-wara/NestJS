@@ -21,5 +21,7 @@ export class AdminForm {
     })
     @Transform(({ value }) => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase())
     name: string;
+
+    isblocked: boolean;
     
 }
