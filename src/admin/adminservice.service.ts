@@ -32,7 +32,7 @@ export class AdminService {
 
     blockUser(id):any {
         return this.usersRepository.update(id, {isblocked: true})
-        return "the id "+ id + " is blocked";
+        //return "the id "+ id + " is blocked";
     }
 
     addNewUser(mydto: AdminForm):any {
