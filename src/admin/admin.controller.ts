@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Session, UsePipes, ValidationPipe} from "@nestjs/common";
 import { AdminForm } from "./adminform.dto";
 import { AdminService } from "./adminservice.service";
 
@@ -66,4 +66,11 @@ export class AdminController
     ):any {
         return this.adminService.payProductionHouse(id, amount);
     }
+
+    @Post('/sendemail')
+    sendEmail(@Body() mydata) {
+        return this.adminService.sendEmail(mydata)
+    }
+
+    
 }

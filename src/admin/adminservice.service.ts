@@ -4,6 +4,8 @@ import { Repository } from 'typeorm'
 import { User } from "./adminentity.entity"
 import { Transform } from "class-transformer"
 import { AdminForm } from "./adminform.dto";
+import { MailerService } from "@nestjs-modules/mailer";
+import * as bcrypt from 'bcrypt';
 
 
 
@@ -14,6 +16,7 @@ export class AdminService {
     constructor(
         @InjectRepository(User)
         private usersRepository: Repository<User>,
+        private mailerService: MailerService
     ){} 
 
     getIndex():string { 
@@ -65,6 +68,33 @@ export class AdminService {
 
     payProductionHouse(id, amount): any {
         return amount + "BDT paid to " + id;
+    }
+
+    async sendEmail(mydata){
+        return await this.mailerService.sendMail({
+            to: mydata.email,
+            subject: mydata.subject,
+            text: mydata.text,
+        });
+    }
+
+    async signup(mydto) {
+        const salt = await bcrypt.genSalt();
+        const hashedPass = await bcrypt.hash(mydto.password, salt);
+        mydto.password = hashedPass;
+        return this.usersRepository.save(mydto);
+    }
+
+    async signin(mydto) {
+        console.log(mydto.password);
+        const mydata = await this.usersRepository.findOneBy({email: mydto.email});
+        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
+        if(isMatch) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
     }
 
 }
