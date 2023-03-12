@@ -85,16 +85,47 @@ export class AdminService {
         return this.usersRepository.save(mydto);
     }
 
-    async signin(mydto) {
-        console.log(mydto.password);
-        const mydata = await this.usersRepository.findOneBy({email: mydto.email});
-        const isMatch = await bcrypt.compare(mydto.password, mydata.password);
-        if(isMatch) {
-            return 1;
+    async signin(mydto){
+        console.log("Password: " + mydto.password);
+        const mydata= await this.usersRepository.findOneBy({email: mydto.email});
+        if(mydata) {
+            const match = await bcrypt.compare(mydto.password, mydata.password);
+            if(match) {
+                console.log("Success")
+                return true;
+            }
+            else {
+                console.log("Invalid Creds")
+                return false;
+            }
         }
         else {
+            console.log("User not found");
             return 0;
         }
+        // console.log(mydata.password);
+        // const isMatch= await bcrypt.compare(mydto.password, mydata.password);
+        // if(isMatch) {
+        //     return 1;
+        // }
+        // else {
+        //     return 0;
+        // }
+        
     }
+
+    // async signin(mydto) {
+    //     console.log(mydto.password);
+    //     const salt = await bcrypt.genSalt();
+    //     const mydata = await this.usersRepository.findOneBy({email: mydto.email});
+    //     const hash = await bcrypt.hash(mydto.password, salt)
+    //     const isMatch = await bcrypt.compare(hash, mydata.password);
+    //     if(isMatch) {
+    //         return 1;
+    //     }
+    //     else {
+    //         return 0;
+    //     }
+    // }
 
 }

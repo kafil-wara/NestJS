@@ -1,6 +1,10 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Session, UsePipes, ValidationPipe} from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Session, UnauthorizedException, UsePipes, ValidationPipe} from "@nestjs/common";
+import { Req } from "@nestjs/common";
 import { AdminForm } from "./adminform.dto";
 import { AdminService } from "./adminservice.service";
+import * as session from 'express-session'
+import { request } from "http";
+
 
 
 @Controller("/admin")
@@ -72,5 +76,33 @@ export class AdminController
         return this.adminService.sendEmail(mydata)
     }
 
+    @Post('/signup')
+    signup(@Body() mydto:AdminForm):any {
+        return this.adminService.signup(mydto);
+    }
+
+    @Get('/signin')
+    async signin(@Session() session, @Body() mydto:AdminForm) {
+        if (await this.adminService.signin(mydto)) {
+            session.email = mydto.email;
+            console.log("Email: " + session.email);
+            return {message: "Logged in!"};
+        }
+        else {
+            return {message: "Invalid Credentials"};
+        }
+    }
+
+    @Get('/signout')
+    signout(@Session() session)
+    {
+        if(session.destroy()) {
+            return {message: "Logged out successfully"};
+        }
+        else {
+            throw new UnauthorizedException("Invalid Action!");
+        }
+    }
     
+
 }
