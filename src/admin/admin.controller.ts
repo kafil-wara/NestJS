@@ -74,8 +74,8 @@ export class AdminController
         return this.adminService.payProductionHouse(id, amount);
     }
 
-    @Get('/findmanagersbyadmin/:id')
-    getManagerByAdminID(@Param('id', ParseIntPipe) id: number): any {
+    @Get('/findusersbyadmin/:id')
+    getUsersByAdminID(@Param('id', ParseIntPipe) id: number): any {
       return this.adminService.getUsersByAdminID(id);
     }
 
