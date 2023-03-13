@@ -6,6 +6,7 @@ import { Transform } from "class-transformer"
 import { AdminForm } from "./adminform.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 import * as bcrypt from 'bcrypt';
+import { Session } from "@nestjs/common";
 
 
 
@@ -20,7 +21,7 @@ export class AdminService {
     ){} 
 
     getIndex():string { 
-        return "Admin Index"; 
+        return "Welcome Admin"; 
 
     }
 
@@ -68,6 +69,15 @@ export class AdminService {
 
     payProductionHouse(id, amount): any {
         return amount + "BDT paid to " + id;
+    }
+
+    getUsersByAdminID(id):any {
+        return this.usersRepository.find({ 
+                where: {id:id},
+            relations: {
+                admin: true,
+            },
+         });
     }
 
     async sendEmail(mydata){

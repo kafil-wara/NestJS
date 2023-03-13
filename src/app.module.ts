@@ -14,7 +14,7 @@ import { User } from './admin/adminentity.entity';
     password: 'aaa',
     database: 'bdflix',
     autoLoadEntities: true,
-    //synchronize: true,
+    synchronize: true,
   })],
   controllers: [AppController],
   providers: [AppService],
