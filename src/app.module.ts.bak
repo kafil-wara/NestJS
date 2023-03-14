@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AdminModule } from './admin/admin.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './admin/adminentity.entity';
-import { ProductionhouseModule } from './productionhouse/productionhousemodule.module';
-import { VideoModule } from './video/video.module';
 
 @Module({
-  imports: [AdminModule, ProductionhouseModule, VideoModule, TypeOrmModule.forRoot({
+  imports: [AdminModule, TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
     port: 5432,
