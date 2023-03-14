@@ -74,13 +74,20 @@ export class AdminController
         return this.adminService.payProductionHouse(id, amount);
     }
 
+
+    // @Get('/findusersbyadmin/:id')
+    // async getUsersByAdminID(@Param('id', ParseIntPipe) id: number): Promise<any> {
+    //     return await this.adminService.getUsersByAdminID(id);
+    // }
+
+
     @Get('/findusersbyadmin/:id')
     getUsersByAdminID(@Param('id', ParseIntPipe) id: number): any {
       return this.adminService.getUsersByAdminID(id);
     }
 
     @Post('/sendemail')
-    @UseGuards(SessionGuard)
+    //@UseGuards(SessionGuard)
     sendEmail(@Body() mydata) {
         return this.adminService.sendEmail(mydata)
     }

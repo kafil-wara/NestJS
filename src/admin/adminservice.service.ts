@@ -7,6 +7,8 @@ import { AdminForm } from "./adminform.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 import * as bcrypt from 'bcrypt';
 import { Session } from "@nestjs/common";
+import { getManager } from "typeorm";
+import 'reflect-metadata'
 
 
 
@@ -71,14 +73,15 @@ export class AdminService {
         return amount + "BDT paid to " + id;
     }
 
-    getUsersByAdminID(id):any {
-        return this.usersRepository.find({ 
-                where: {id:id},
-            relations: {
-                admin: true,
-            },
-         });
-    }
+    async getUsersByAdminID(adminId: number): Promise<User[]> {
+        const users = await this.usersRepository.createQueryBuilder('user')
+          .where('user.adminId = :adminId', { adminId })
+          .leftJoinAndSelect('user.admin', 'admin')
+          .getMany();
+      
+        return users;
+      }
+    
 
     async sendEmail(mydata){
         return await this.mailerService.sendMail({

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn } from 'typeorm';
 import { Admin } from 'src/admin/admin.entity';
 import { ManyToOne } from 'typeorm';
 
@@ -27,6 +27,7 @@ export class User{
   
 
   @ManyToOne(() => Admin, admin => admin.users)
+  //@JoinColumn({ name: 'admin_id' })
   admin: Admin;
 
   
