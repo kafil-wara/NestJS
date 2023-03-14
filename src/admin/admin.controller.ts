@@ -87,7 +87,7 @@ export class AdminController
     }
 
     @Post('/sendemail')
-    //@UseGuards(SessionGuard)
+    @UseGuards(SessionGuard)
     sendEmail(@Body() mydata) {
         return this.adminService.sendEmail(mydata)
     }

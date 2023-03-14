@@ -9,12 +9,13 @@ import { MailerModule } from '@nestjs-modules/mailer';
 
     imports: [MailerModule.forRoot({
         transport: {
-          host: 'smtp.office365.com',
-                   port: 587,
-                   secure: false,
+          host: 'smtp.gmail.com',
+          port: 465,
+          ignoreTLS: true,
+          secure: true,
                    auth: {
-                       user: 'bdflixtest@hotmail.com',
-                       pass: 'Abcd1234@@'
+                       user: '@gmail.com',
+                       pass: 'fsjmonljrauvhkto'
                    },
                 //    tls: {
                 //         ciphers: 'SSLv3'
