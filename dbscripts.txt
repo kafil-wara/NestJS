@@ -1,0 +1,57 @@
+"postCreateCommand": "npm install -g @nestjs/common express-session http @nestjs/platform-express multer express @nestjs/typeorm @nestjs-modules/mailer class-validator class-transformer bcrypt rxjs @nestjs/core @nestjs/cli"
+
+
+
+Create Admin table
+
+-- Table: public.admin
+
+-- DROP TABLE IF EXISTS public.admin;
+
+CREATE TABLE IF NOT EXISTS public.admin
+(
+    id integer NOT NULL,
+    name character varying COLLATE pg_catalog."default",
+    email character varying COLLATE pg_catalog."default",
+    password character varying COLLATE pg_catalog."default",
+    CONSTRAINT admin_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.admin
+    OWNER to postgres;
+
+
+
+Create User table
+
+CREATE SEQUENCE user_id_seq
+
+
+
+
+-- Table: public.user
+
+-- DROP TABLE IF EXISTS public."user";
+
+CREATE TABLE IF NOT EXISTS public."user"
+(
+    id integer NOT NULL DEFAULT nextval('user_id_seq'),
+    name character varying COLLATE pg_catalog."default" NOT NULL,
+    email character varying COLLATE pg_catalog."default" NOT NULL,
+    password character varying COLLATE pg_catalog."default" NOT NULL,
+    isblocked boolean DEFAULT 'false',
+    filename character varying COLLATE pg_catalog."default",
+    "adminId" integer,
+    CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY (id),
+    CONSTRAINT user_admin_id_fkey FOREIGN KEY ("adminId")
+        REFERENCES public.admin (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."user"
+    OWNER to postgres;

@@ -13,7 +13,7 @@ import { Admin } from './admin/admin.entity';
     port: 5432,
     username: 'postgres',
     password: 'aaa',
-    database: 'bdflix',
+    database: 'gg',
     entities: [Admin, User]
     //autoLoadEntities: true,
     //synchronize: true,
