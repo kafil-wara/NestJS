@@ -1,9 +1,12 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query, Session, UnauthorizedException, UsePipes, ValidationPipe} from "@nestjs/common";
+import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, ParseIntPipe, Post, Put, Query, Session, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors, UsePipes, ValidationPipe} from "@nestjs/common";
 import { Req } from "@nestjs/common";
 import { AdminForm } from "./adminform.dto";
 import { AdminService } from "./adminservice.service";
 import * as session from 'express-session'
 import { request } from "http";
+import { SessionGuard } from "./admin.session.guard";
+import { diskStorage } from "multer";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 
 
@@ -71,20 +74,49 @@ export class AdminController
         return this.adminService.payProductionHouse(id, amount);
     }
 
+
+    // @Get('/findusersbyadmin/:id')
+    // async getUsersByAdminID(@Param('id', ParseIntPipe) id: number): Promise<any> {
+    //     return await this.adminService.getUsersByAdminID(id);
+    // }
+
+
+    @Get('/findusersbyadmin/:id')
+    getUsersByAdminID(@Param('id', ParseIntPipe) id: number): any {
+      return this.adminService.getUsersByAdminID(id);
+    }
+
     @Post('/sendemail')
+    @UseGuards(SessionGuard)
     sendEmail(@Body() mydata) {
         return this.adminService.sendEmail(mydata)
     }
 
     @Post('/signup')
-    signup(@Body() mydto:AdminForm):any {
+    @UseInterceptors(FileInterceptor('myfile', {
+        storage:diskStorage({
+            destination:'./uploads',
+            filename: function (req, file, cb) {
+                cb(null,Date.now()+file.originalname)
+            }
+        })
+    }))
+    signup(@Body() mydto:AdminForm, @UploadedFile(new ParseFilePipe({
+        validators: [
+            new MaxFileSizeValidator({ maxSize: 160000 }),
+            new FileTypeValidator({ fileType: 'png|jpg|jpeg'}),
+        ],
+    }),) file: Express.Multer.File) {
+        console.log(file)
         return this.adminService.signup(mydto);
+        
     }
 
     @Get('/signin')
     async signin(@Session() session, @Body() mydto:AdminForm) {
         if (await this.adminService.signin(mydto)) {
             session.email = mydto.email;
+            session.name = mydto.name;
             console.log("Email: " + session.email);
             return {message: "Logged in!"};
         }

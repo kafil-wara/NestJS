@@ -24,4 +24,7 @@ export class AdminForm {
 
     isblocked: boolean;
     
+    @IsNotEmpty()
+    filename: string;
+    
 }

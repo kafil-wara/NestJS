@@ -6,6 +6,9 @@ import { Transform } from "class-transformer"
 import { AdminForm } from "./adminform.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 import * as bcrypt from 'bcrypt';
+import { Session } from "@nestjs/common";
+import { getManager } from "typeorm";
+import 'reflect-metadata'
 
 
 
@@ -20,7 +23,7 @@ export class AdminService {
     ){} 
 
     getIndex():string { 
-        return "Admin Index"; 
+        return "Welcome Admin"; 
 
     }
 
@@ -69,6 +72,16 @@ export class AdminService {
     payProductionHouse(id, amount): any {
         return amount + "BDT paid to " + id;
     }
+
+    async getUsersByAdminID(adminId: number): Promise<User[]> {
+        const users = await this.usersRepository.createQueryBuilder('user')
+          .where('user.adminId = :adminId', { adminId })
+          .leftJoinAndSelect('user.admin', 'admin')
+          .getMany();
+      
+        return users;
+      }
+    
 
     async sendEmail(mydata){
         return await this.mailerService.sendMail({

@@ -7,6 +7,9 @@ import { request } from "http";
 import { ViewerSessionGuard } from "./session.guard";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
+import { Express } from "express";
+import { Multer } from 'multer';
+
 import { ViewerCatagory, ViewerLogin, ViewerProfile, ViewerVarifyPass } from "./viewerform.dto";
 
 
