@@ -6,6 +6,7 @@ import { Transform } from "class-transformer"
 import { AdminForm } from "./adminform.dto";
 import { MailerService } from "@nestjs-modules/mailer";
 import * as bcrypt from 'bcrypt';
+import { ILike } from "typeorm";
 
 
 
@@ -32,6 +33,27 @@ export class AdminService {
         return this.usersRepository.findOneBy({ id })
         //return "the id is "+id;
     }
+
+    //getUserByName(qry):any {
+        
+        //return this.usersRepository.findOneBy(qry.name)
+    //}
+
+    async searchByName(name: string): Promise<User[]> {
+        return this.usersRepository.find({
+          where: {
+            name: ILike("%" + name + "%"), // case-insensitive search
+              
+          },
+        });
+      }
+
+    //create a function that gets the user by provided id, takes in the new data and updates the user
+    updateUser(id, mydto: AdminForm):any {
+        return this.usersRepository.update(id, mydto)
+        //return "the id "+ id + " is updated";
+    }
+
 
     blockUser(id):any {
         return this.usersRepository.update(id, {isblocked: true})
