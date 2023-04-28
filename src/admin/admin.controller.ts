@@ -98,15 +98,15 @@ export class AdminController
         return this.adminService.signup(mydto);
     }
 
-    @Get('/signin')
+    @Post('/signin')
     async signin(@Session() session, @Body() mydto:AdminForm) {
         if (await this.adminService.signin(mydto)) {
             session.email = mydto.email;
-            console.log("Email: " + session.email);
-            return {message: "Logged in!"};
+            //console.log("Email: " + session.email);
+            return {authenticated: true};
         }
         else {
-            return {message: "Invalid Credentials"};
+            return {authenticated: false};
         }
     }
 
