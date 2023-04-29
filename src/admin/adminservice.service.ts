@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from 'typeorm'
 import { User } from "./adminentity.entity"
@@ -128,5 +128,6 @@ export class AdminService {
             return 0;
         }        
     }
+    
 
 }
