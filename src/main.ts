@@ -7,7 +7,7 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
 
   app.use(cors({
-    origin: ['http://localhost:3000', 'https://*.vercel.app/'],
+    origin: ['http://localhost:3000', 'https://nextjs-six-iota-11.vercel.app/'],
     credentials: true, 
   }));
 
