@@ -55,10 +55,23 @@ export class AdminService {
     }
 
 
-    blockUser(id):any {
-        return this.usersRepository.update(id, {isblocked: true})
-        //return "the id "+ id + " is blocked";
-    }
+    blockUser(id: any): any {
+        this.usersRepository.findOne({ where: { id } })
+          .then(user => {
+            if (user) {
+              const isBlocked = !user.isblocked;
+              console.log("The id " + id + " is " + (isBlocked ? "blocked" : "unblocked"));
+              return this.usersRepository.update(id, { isblocked: isBlocked });
+            }
+            return null;
+          })
+          .catch(error => {
+            console.log(error);
+            return null;
+          });
+      }
+      
+      
 
     addNewUser(mydto: AdminForm):any {
         const useracc = new User()
