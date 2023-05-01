@@ -117,6 +117,7 @@ export class AdminService {
         const salt = await bcrypt.genSalt();
         const hashedPass = await bcrypt.hash(mydto.password, salt);
         mydto.password = hashedPass;
+        mydto.isblocked = false;
         return this.usersRepository.save(mydto);
     }
 
