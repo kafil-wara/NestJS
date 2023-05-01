@@ -8,11 +8,11 @@ import { User } from './admin/adminentity.entity';
 @Module({
   imports: [AdminModule, TypeOrmModule.forRoot({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
+    host: 'containers-us-west-21.railway.app',
+    port: 6856,
     username: 'postgres',
-    password: 'aaa',
-    database: 'bdflix',
+    password: 'P5MlKcUIc7iZ7vqa6tE2',
+    database: 'railway',
     autoLoadEntities: true,
     synchronize: true,
   })],
