@@ -101,7 +101,7 @@ export class AdminController
     @Post('/signin')
     async signin(@Session() session, @Body() mydto:AdminForm) {
         if (await this.adminService.signin(mydto)) {
-            session.email = mydto.email;
+            //session.email = mydto.email;
             //console.log("Email: " + session.email);
             return {authenticated: true};
         }
