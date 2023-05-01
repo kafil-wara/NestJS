@@ -5,6 +5,7 @@ import * as cors from 'cors';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
+  app.enableCors();
 
   app.enableCors({
     allowedHeaders: '*',
